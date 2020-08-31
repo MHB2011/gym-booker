@@ -16,6 +16,10 @@ const TrainingSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  max_people: {
+    type: Number,
+    require: true,
+  },
 });
 
 module.exports = mongoose.model("training", TrainingSchema);

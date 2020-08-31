@@ -33,34 +33,51 @@ router.post(
     [
       body("name", "Name is required (max 30 characters long)")
         .exists()
+        .bail()
         .not()
         .isEmpty()
+        .bail()
         .isString()
+        .bail()
         .isLength({ max: 30 })
         .trim()
         .escape(),
       body("category", "Category is required (max 30 characters long)")
         .exists()
+        .bail()
         .not()
         .isEmpty()
+        .bail()
         .isString()
+        .bail()
         .isLength({ max: 30 })
         .trim()
         .escape(),
       body("description", "Description is required, (max 200 characters)")
         .exists()
+        .bail()
         .not()
         .isEmpty()
+        .bail()
         .isString()
         .isLength({ max: 200 })
         .trim()
         .escape(),
       body("date", "Date is required")
         .exists()
+        .bail()
         .not()
         .isEmpty()
+        .bail()
         .isString()
         .toDate(),
+      body("max_people", "Maximum number of people is required")
+        .isInt()
+        .bail()
+        .isLength({ max: 10, min: 1 })
+        .bail()
+        .exists()
+        .bail(),
     ],
   ],
   async (req, res) => {
@@ -69,7 +86,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, category, description, date } = req.body;
+    const { name, category, description, date, max_people } = req.body;
 
     try {
       const newTraining = new Training({
@@ -77,6 +94,7 @@ router.post(
         category,
         description,
         date,
+        max_people,
       });
 
       const training = await newTraining.save();
