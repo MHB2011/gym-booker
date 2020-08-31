@@ -1,11 +1,20 @@
 const express = require("express");
+const connectDB = require("./config/db");
 
 const app = express();
 
-app.use("api/users", require("./routes/users"));
-app.use("api/suth", require("./routes/suth"));
-app.use("api/bookings", require("./routes/bookings"));
-app.use("api/trainings", require("./routes/trainings"));
+connectDB();
+
+app.use(express.json({ extended: false }));
+
+app.get("/", (req, res) =>
+  res.json({ msg: "Welcome to the GymBooker API..." })
+);
+
+app.use("/api/users", require("./routes/users"));
+app.use("/api/auth", require("./routes/auth"));
+//app.use("/api/bookings", require("./routes/bookings"));
+app.use("/api/trainings", require("./routes/trainings"));
 
 const PORT = process.env.PORT || 5000;
 

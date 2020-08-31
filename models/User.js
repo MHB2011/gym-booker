@@ -18,6 +18,10 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  admin: {
+    type: Number,
+    require: true,
+  },
 });
 
 module.exports = mongoose.model("user", UserSchema);
