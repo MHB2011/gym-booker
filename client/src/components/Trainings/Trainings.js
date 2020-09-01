@@ -9,7 +9,7 @@ const Trainings = () => {
   return (
     <Fragment>
       {trainings.map((training) => (
-        <TrainingItem training={training} />
+        <TrainingItem key={training.id} training={training} />
       ))}
     </Fragment>
   );

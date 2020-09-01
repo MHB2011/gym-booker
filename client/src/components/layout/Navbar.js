@@ -1,14 +1,63 @@
-import React from "react";
+import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/auth/authContext";
 
 const Navbar = ({ title, icon }) => {
+  const authContext = useContext(AuthContext);
+  const { logout, user, isAuthenticated } = authContext;
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const authLinks = (
+    <Fragment>
+      <li className="nav-item">
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/about" className="nav-link">
+          About
+        </Link>
+      </li>
+      <li>
+        <a onClick={onLogout} className="nav-link">
+          <i className="fas fa-sign-out-alt" />
+          <span className="logout hide-sm">Logout</span>
+        </a>
+      </li>
+      <li>
+        <p className="hello btn btn-sm btn-outline-secondary mx-3">
+          Hello, {user && user.name}
+        </p>
+      </li>
+    </Fragment>
+  );
+
+  const guestLinks = (
+    <Fragment>
+      <li className="nav-item">
+        <Link to="/register" className="nav-link">
+          Register
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/login" className="nav-link">
+          Login
+        </Link>
+      </li>
+    </Fragment>
+  );
+
   return (
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
       <div className="container">
-        <h1 href="index.html" className="navbar-brand">
+        <Link to="/" className="navbar-brand">
           <i className={icon} /> GymBooker
-        </h1>
+        </Link>
         <button
           className="navbar-toggler"
           data-toggle="collapse"
@@ -18,26 +67,7 @@ const Navbar = ({ title, icon }) => {
         </button>
         <div id="NAVtogler" className="collapse navbar-collapse">
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/about" className="nav-link">
-                About
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/register" className="nav-link">
-                Register
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            </li>
+            {isAuthenticated ? authLinks : guestLinks}
           </ul>
         </div>
       </div>

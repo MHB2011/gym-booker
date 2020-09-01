@@ -58,3 +58,19 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
+
+.hello {
+  color: #fff !important;
+  text-decoration: none !important;
+  cursor: default !important;
+}
+
+.hello:hover {
+  text-decoration: none !important;
+  color: #fff !important;
+  background-color: #343a40 !important;
+}
+
+.logout:hover {
+  cursor: pointer !important;
+}

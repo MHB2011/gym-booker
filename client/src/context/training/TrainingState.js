@@ -1,16 +1,15 @@
 import React, { useReducer } from "react";
-import uuid from "uuid";
 import TrainingContext from "./TrainingContext";
 import TrainingReducer from "./TrainingReducer";
-import {
-  ADD_TRAINING,
-  DELETE_TRAINING,
-  SET_CURRENT,
-  CLEAR_CURRENT,
-  UPDATE_TRAINING,
-  FILTER_TRAINING,
-  CLEAR_FILTER,
-} from "../types";
+// import {
+//   ADD_TRAINING,
+//   DELETE_TRAINING,
+//   SET_CURRENT,
+//   CLEAR_CURRENT,
+//   UPDATE_TRAINING,
+//   FILTER_TRAINING,
+//   CLEAR_FILTER,
+// } from "../types";
 
 const TrainingState = (props) => {
   const initalState = {

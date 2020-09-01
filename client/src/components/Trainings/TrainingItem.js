@@ -17,7 +17,7 @@ const TrainingItem = ({ training }) => {
 
         <div className="card-subtitle mb-2 text-muted">
           <div>
-            <i class="far fa-clock"></i> {date}
+            <i className="far fa-clock"></i> {date}
           </div>
         </div>
         <div className="card-text">
@@ -27,7 +27,7 @@ const TrainingItem = ({ training }) => {
             <div className="buttons">
               <Link
                 to={`training/${id}`}
-                class="btn btn-sm btn-outline-primary mt-2"
+                className="btn btn-sm btn-outline-primary mt-2"
               >
                 View
               </Link>
