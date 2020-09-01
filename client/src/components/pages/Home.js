@@ -1,10 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
+import Trainings from "../Trainings/Trainings";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <Fragment>
+      <h2 className="my-3">Next trainings</h2>
+      <div className="d-flex flex-column mt-3">
+        <Trainings />
+      </div>
+    </Fragment>
   );
 };
 
