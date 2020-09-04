@@ -11,6 +11,16 @@ const Navbar = ({ title, icon }) => {
     logout();
   };
 
+  const adminLinks = (
+    <Fragment>
+      <li>
+        <Link to="/admin" className="nav-link">
+          <i className="fas fa-users-cog" /> Admin
+        </Link>
+      </li>
+    </Fragment>
+  );
+
   const authLinks = (
     <Fragment>
       <li className="nav-item">
@@ -29,6 +39,7 @@ const Navbar = ({ title, icon }) => {
           <span className="logout hide-sm">Logout</span>
         </a>
       </li>
+      {user && user.admin == 1 ? adminLinks : ""}
       <li>
         <p className="hello btn btn-sm btn-outline-secondary mx-3">
           Hello, {user && user.name}

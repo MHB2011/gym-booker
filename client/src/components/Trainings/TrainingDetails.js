@@ -18,7 +18,7 @@ const TrainingDetails = ({ match }) => {
   // eslint-disable-next-line
   const current_training = trainings.filter((training) => {
     // eslint-disable-next-line
-    if (training.id == training_id) {
+    if (training._id == training_id) {
       return true;
     }
   })[0];

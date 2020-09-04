@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
+import AdminPanel from "./components/admin/AdminPanel";
 import TrainingState from "./context/training/TrainingState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -13,6 +14,7 @@ import Login from "./components/auth/Login";
 import Alerts from "./components/layout/Alerts";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import AdminRoute from "./components/routing/AdminRoute";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -38,6 +40,7 @@ const App = () => {
                   />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <AdminRoute path="/admin" component={AdminPanel} />
                 </Switch>
               </div>
             </Fragment>

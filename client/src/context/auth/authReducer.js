@@ -15,6 +15,7 @@ export default (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        isAdmin: action.payload.admin == 1 ? true : false,
         loading: false,
         user: action.payload,
       };
@@ -36,6 +37,7 @@ export default (state, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: false,
         loading: false,
         user: null,
         error: action.payload,

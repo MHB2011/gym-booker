@@ -14,11 +14,13 @@ router.post(
   "/",
   [
     body("name").not().isEmpty(),
-    body("email", "Please enter a valid email").isEmail().normalizeEmail(),
+    body("email", "Please enter a valid email")
+      .isEmail()
+      .normalizeEmail({ gmail_remove_dots: false }),
     body(
       "password",
-      "Please enter a password at least 6 characters long"
-    ).isLength({ min: 6 }),
+      "Please enter a password at least 6 characters long and maximum 100 characters long"
+    ).isLength({ min: 6, max: 100 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);

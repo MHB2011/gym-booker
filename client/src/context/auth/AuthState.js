@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import axios from "axios";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
@@ -18,6 +18,7 @@ const AuthState = (props) => {
   const initalState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
+    isAdmin: false,
     loading: true,
     user: null,
     error: null,
@@ -38,6 +39,11 @@ const AuthState = (props) => {
       dispatch({ type: AUTH_ERROR });
     }
   };
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
 
   //Register user
   const register = async (formData) => {
@@ -101,6 +107,7 @@ const AuthState = (props) => {
       value={{
         token: state.token,
         isAuthenticated: state.isAuthenticated,
+        isAdmin: state.isAdmin,
         user: state.user,
         loading: state.loading,
         error: state.error,

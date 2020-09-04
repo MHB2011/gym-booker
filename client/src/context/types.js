@@ -1,3 +1,4 @@
+export const GET_TRAININGS = "GET_TRAININGS";
 export const ADD_TRAINING = "ADD_TRAINING";
 export const DELETE_TRAINING = "DELETE_TRAINING";
 export const SET_CURRENT = "SET_CURRENT";
@@ -7,6 +8,7 @@ export const FILTER_TRAINING = "FILTER_TRAINING";
 export const CLEAR_FILTER = "CLEAR_FILTER";
 export const SET_ALERT = "SET_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
+export const TRAINING_ERROR = "TRAINING_ERROR";
 //auth
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";

@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const User = require("../models/User");
 const Training = require("../models/Training");
+const moment = require("moment");
 
 // @route   GET api/trainings
 // @desc    Get all trainings
@@ -12,7 +13,10 @@ const Training = require("../models/Training");
 // @admin   Everyone
 router.get("/", auth, async (req, res) => {
   try {
-    const trainings = await Training.find({}).sort({ date: -1 });
+    const today = moment(new Date(), "DD-MM-YYYY");
+    const trainings = await Training.find({
+      date: { $gte: today },
+    }).sort({ date: 1 });
     res.json(trainings);
   } catch (err) {
     console.error(err.message);
@@ -63,14 +67,8 @@ router.post(
         .isLength({ max: 200 })
         .trim()
         .escape(),
-      body("date", "Date is required")
-        .exists()
-        .bail()
-        .not()
-        .isEmpty()
-        .bail()
-        .isString()
-        .toDate(),
+      body("date", "Date is required").exists().bail().not().isEmpty().toDate(),
+
       body("max_people", "Maximum number of people is required")
         .isInt()
         .bail()

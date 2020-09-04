@@ -74,3 +74,27 @@ img {
 .logout:hover {
   cursor: pointer !important;
 }
+
+.admin-header {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+[class^="item-admin-header-"] {
+  background: #eeeeee;
+  border-radius: 15px;
+  color: #343a41 !important;
+  transition: opacity 0.5s;
+}
+
+[class^="item-admin-header-"]:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.react-datepicker-wrapper {
+  display: block !important;
+}
