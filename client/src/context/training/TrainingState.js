@@ -56,6 +56,7 @@ const TrainingState = (props) => {
   //Update training
   const editTraining = async (training) => {
     const config = { headers: { "Content-Type": "application/json" } };
+    training.max_people = parseFloat(training.max_people);
     try {
       const res = await axios.put(
         `/api/trainings/${training.id}`,

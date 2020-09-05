@@ -1,21 +1,29 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import TrainingContext from "../../context/training/TrainingContext";
 import AuthContext from "../../context/auth/authContext";
+import BookingContext from "../../context/booking/BookingContext";
+import Bookings from "../bookings/Bookings";
 
 const TrainingDetails = ({ match }) => {
   const authContext = useContext(AuthContext);
-
-  useEffect(() => {
-    authContext.loadUser();
-    // eslint-disable-next-line
-  }, []);
-
   const trainingContext = useContext(TrainingContext);
+  const bookingContext = useContext(BookingContext);
   const training_id = match.params.id;
   const trainings = trainingContext.trainings;
 
+  useEffect(() => {
+    authContext.loadUser();
+    trainingContext.getTrainings();
+    // eslint-disable-next-line
+  }, []);
+
   // Check to see if training exists
   // eslint-disable-next-line
+
+  if (trainings === null) {
+    return <h5 className="mt-5">No details</h5>;
+  }
+
   const current_training = trainings.filter((training) => {
     // eslint-disable-next-line
     if (training._id == training_id) {
@@ -24,6 +32,8 @@ const TrainingDetails = ({ match }) => {
   })[0];
 
   const { name, category, description, max_people } = current_training;
+  const { user } = authContext;
+  const user_id = user._id;
 
   return (
     <Fragment>
@@ -49,8 +59,20 @@ const TrainingDetails = ({ match }) => {
           </div>
         </div>
         <div className="bookings w-50">
-          <p>Bookings for this training</p>
-          <button className="btn btn-outline-primary">Book now</button>
+          <p>Reservations for this training</p>
+          <button
+            className="btn btn-outline-primary mb-3"
+            onClick={() => {
+              bookingContext.addBooking(training_id);
+            }}
+          >
+            Reserve
+          </button>
+          <Bookings
+            key={`book-for-${training_id}`}
+            trainingid={training_id}
+            userid={user_id}
+          />
         </div>
       </div>
     </Fragment>

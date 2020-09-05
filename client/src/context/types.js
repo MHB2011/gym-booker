@@ -18,3 +18,9 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+//bookings
+export const GET_BOOKINGS_FOR_TRAINING = "GET_BOOKINGS_FOR_TRAINING";
+export const ADD_BOOKING = "ADD_BOOKING";
+export const REMOVE_BOOKING = "REMOVE_BOOKING";
+export const BOOKING_ERROR = "BOOKING_ERROR";
+export const CLEAR_BOOKING_ERRORS = "CLEAR_BOOKING_ERRORS";

@@ -98,3 +98,8 @@ img {
 .react-datepicker-wrapper {
   display: block !important;
 }
+
+.remove-reservation-td i {
+  color: lightcoral;
+  cursor: pointer;
+}

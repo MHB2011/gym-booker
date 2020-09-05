@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Trainings from "../Trainings/Trainings";
 import NewTrainingForm from "./NewTrainingForm";
 import EditTrainingForm from "./EditTrainingForm";
+import NotFound from "../pages/NotFound";
 
 import {
   BrowserRouter as Router,
@@ -11,6 +12,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import TrainingContext from "../../context/training/TrainingContext";
+import TrainingDetails from "../Trainings/TrainingDetails";
 
 const AdminTrainings = () => {
   const trainingContext = useContext(TrainingContext);
@@ -49,6 +51,8 @@ const AdminTrainings = () => {
               path={`${match.path}/edit_training`}
               component={EditTrainingForm}
             />
+            <Route exact path="/training/:id" component={TrainingDetails} />
+            <Route component={NotFound} />
           </Switch>
         </main>
       </div>

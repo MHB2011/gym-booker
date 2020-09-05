@@ -40,6 +40,7 @@ const TrainingItem = ({ training }) => {
           Edit
         </Link>
         <a
+          href="/"
           className="btn btn-sm btn-outline-danger mt-2 mr-2"
           onClick={onDelete}
           id={_id}
@@ -69,7 +70,7 @@ const TrainingItem = ({ training }) => {
           <div className="list-group">
             <div className="buttons">
               <Link
-                to={`training/${_id}`}
+                to={`/training/${_id}`}
                 className="btn btn-sm btn-outline-primary mt-2"
               >
                 View

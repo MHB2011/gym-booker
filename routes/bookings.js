@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
 const Booking = require("../models/Booking");
 const Training = require("../models/Training");
+const User = require("../models/User");
 
 // @route   GET api/bookings
 // @desc    Get all of users bookings
@@ -14,6 +15,28 @@ router.get("/", auth, async (req, res) => {
     const bookings = await Booking.find({ user: req.user.id });
 
     res.send(bookings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   POST api/bookings/get_bookings_for_training/:id
+// @desc    Get bookings for specific training id
+// @access  Private
+// @admin   Everyone
+router.get("/get_bookings_for_training/:id", auth, async (req, res) => {
+  try {
+    const bookings = await Booking.find({ training: req.params.id });
+    const new_booking = bookings.map((book) => {
+      return { name: book.name, id: book.user, bookingid: book._id };
+    });
+
+    let response = {};
+    response.training_id = req.params.id;
+    response.book = new_booking;
+
+    res.send(response);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -52,6 +75,17 @@ router.post(
 
       training = await Training.findById(training_id);
 
+      const max_people = training.max_people;
+      const already_reserverd_spots = await Booking.find({
+        training: training_id,
+      }).count();
+
+      if (already_reserverd_spots >= max_people) {
+        return res.status(400).json({
+          msg: "Maximum number of people already reserved for this training.",
+        });
+      }
+
       if (!training) {
         return res.status(404).json({ msg: "Training not found" });
       }
@@ -62,12 +96,18 @@ router.post(
       });
 
       if (already_booked) {
-        return res.json({ msg: "You have already booked this training" });
+        return res
+          .status(400)
+          .json({ msg: "You have already booked this training" });
       }
+
+      const user_data = await User.findById(req.user.id).select("name");
+      const user_name = user_data.name;
 
       const newBooking = new Booking({
         training: training_id,
         user: req.user.id,
+        name: user_name,
       });
 
       const booking = await newBooking.save();

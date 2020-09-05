@@ -138,6 +138,9 @@ router.put(
         .optional({ checkFalsy: true })
         .isString()
         .toDate(),
+      body("max_people", "May_people is in wrong format")
+        .optional({ checkFalsy: true })
+        .isInt(),
     ],
   ],
   async (req, res) => {
@@ -146,13 +149,14 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, category, description, date } = req.body;
+    const { name, category, description, date, max_people } = req.body;
 
     const trainingFields = {};
     if (name) trainingFields.name = name;
     if (category) trainingFields.category = category;
     if (description) trainingFields.description = description;
     if (date) trainingFields.date = date;
+    if (max_people) trainingFields.max_people = max_people;
 
     try {
       let training = await Training.findById(req.params.id);
