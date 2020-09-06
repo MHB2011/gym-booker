@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://toni123:frqin777@contactkeeper.hove6.mongodb.net/gymbooker?retryWrites=true&w=majority",
+  "jwt_secret": "z43t78z4f3g87tz4387tz"
+}
