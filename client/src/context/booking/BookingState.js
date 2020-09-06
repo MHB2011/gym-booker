@@ -8,6 +8,7 @@ import {
   ADD_BOOKING,
   BOOKING_ERROR,
   CLEAR_BOOKING_ERRORS,
+  ADD_BOOKING_MANUALLY,
 } from "../types";
 
 const BookingState = (props) => {
@@ -18,7 +19,7 @@ const BookingState = (props) => {
 
   const [state, dispatch] = useReducer(BookingReducer, initalState);
 
-  //akcije
+  //Get Booking for specific training id
   const getBookingsForTraining = async (trainingid) => {
     try {
       const res = await axios.get(
@@ -31,6 +32,7 @@ const BookingState = (props) => {
     }
   };
 
+  //Add new booking
   const addBooking = async (trainingid) => {
     const config = { headers: { "Content-Type": "application/json" } };
     try {
@@ -41,11 +43,26 @@ const BookingState = (props) => {
       );
       dispatch({ type: ADD_BOOKING, payload: res.data });
     } catch (err) {
-      console.log(err.response);
       dispatch({ type: BOOKING_ERROR, payload: err.response.data.msg });
     }
   };
 
+  //Add new booking manually
+  const addBookingManually = async (trainingid, email) => {
+    const config = { headers: { "Content-Type": "application/json" } };
+    try {
+      const res = await axios.post(
+        "/api/bookings/add_manually",
+        { trainingid: trainingid, email: email },
+        config
+      );
+      dispatch({ type: ADD_BOOKING, payload: res.data });
+    } catch (err) {
+      dispatch({ type: BOOKING_ERROR, payload: err.response.data.msg });
+    }
+  };
+
+  //Remove booking by id
   const removeBooking = async (userid, trainingid) => {
     let bookingid = null;
     state.bookings.forEach((booking) => {
@@ -69,6 +86,7 @@ const BookingState = (props) => {
     }
   };
 
+  //clear errors from state
   const clearbookingErrors = () => {
     dispatch({ type: CLEAR_BOOKING_ERRORS });
   };
@@ -82,6 +100,7 @@ const BookingState = (props) => {
         addBooking,
         removeBooking,
         clearbookingErrors,
+        addBookingManually,
       }}
     >
       {props.children}

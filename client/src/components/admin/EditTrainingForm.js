@@ -6,6 +6,7 @@ import setMinutes from "date-fns/setMinutes";
 import { hr } from "date-fns/esm/locale";
 import TrainingContext from "../../context/training/TrainingContext";
 import AlertContext from "../../context/alert/alertContext";
+import AddManually from "../admin/AddManually";
 
 const EditTrainingForm = (props) => {
   const trainingContext = useContext(TrainingContext);
@@ -67,7 +68,8 @@ const EditTrainingForm = (props) => {
 
   return (
     <Fragment>
-      <h5 className="mb-4">Edit Training</h5>
+      <AddManually trainingid={current._id} />
+      <h4 className="mb-2 mt-4">Edit Training</h4>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="datetime">Starts at</label>

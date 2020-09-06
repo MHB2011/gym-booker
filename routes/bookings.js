@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 const Booking = require("../models/Booking");
 const Training = require("../models/Training");
 const User = require("../models/User");
@@ -98,7 +99,7 @@ router.post(
       if (already_booked) {
         return res
           .status(400)
-          .json({ msg: "You have already booked this training" });
+          .json({ msg: "You have already reserved this training" });
       }
 
       const user_data = await User.findById(req.user.id).select("name");
@@ -107,6 +108,101 @@ router.post(
       const newBooking = new Booking({
         training: training_id,
         user: req.user.id,
+        name: user_name,
+      });
+
+      const booking = await newBooking.save();
+
+      res.send(booking);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+// @route   POST api/bookings/add_manually
+// @desc    Book new training by admin
+// @access  Private
+// @admin   Admin
+router.post(
+  "/add_manually",
+  [
+    auth,
+    admin,
+    [
+      body("trainingid", "Training id is required")
+        .exists()
+        .bail()
+        .not()
+        .isEmpty()
+        .bail()
+        .trim()
+        .escape(),
+      body("email", "Email is required")
+        .exists()
+        .bail()
+        .not()
+        .isEmpty()
+        .bail()
+        .isEmail()
+        .bail()
+        .trim()
+        .escape(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      let training;
+      let already_booked;
+      const training_id = req.body.trainingid;
+
+      training = await Training.findById(training_id);
+
+      const max_people = training.max_people;
+      const already_reserverd_spots = await Booking.find({
+        training: training_id,
+      }).count();
+
+      if (already_reserverd_spots >= max_people) {
+        return res.status(400).json({
+          msg: "Maximum number of people already reserved for this training.",
+        });
+      }
+
+      if (!training) {
+        return res.status(404).json({ msg: "Training not found" });
+      }
+
+      const user = await User.findOne({ email: req.body.email }).select(
+        "-password"
+      );
+
+      if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+      }
+
+      const user_name = user.name;
+
+      already_booked = await Booking.findOne({
+        user: user._id,
+        training: training_id,
+      });
+
+      if (already_booked) {
+        return res
+          .status(400)
+          .json({ msg: "You have already reserved this training" });
+      }
+
+      const newBooking = new Booking({
+        training: training_id,
+        user: user._id,
         name: user_name,
       });
 
@@ -132,9 +228,13 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(404).json({ msg: "Booking not found" });
     }
 
+    const user = await User.findById(req.user.id).select("admin");
+
     // Make sure user owns booking
     if (booking.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorised" });
+      if (user.admin !== 1) {
+        return res.status(401).json({ msg: "Not authorised" });
+      }
     }
 
     await Booking.findByIdAndRemove(req.params.id);

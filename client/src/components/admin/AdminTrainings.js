@@ -20,7 +20,6 @@ const AdminTrainings = () => {
 
   const onAddTrainingClick = () => {
     trainingContext.clearCurrent();
-    console.log("onAddTrainingClick");
   };
 
   return (
@@ -28,7 +27,7 @@ const AdminTrainings = () => {
       <div>
         <div className="p-2 m-2 d-flex flex-wrap">
           <Link to={match.url} className="btn btn-primary mr-3 mb-3">
-            Trainings
+            All Trainings
           </Link>
           <Link
             to={`${match.url}/add_training`}

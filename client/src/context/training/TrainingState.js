@@ -2,7 +2,6 @@ import React, { useReducer } from "react";
 import TrainingContext from "./TrainingContext";
 import TrainingReducer from "./TrainingReducer";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 import {
   ADD_TRAINING,
   DELETE_TRAINING,
@@ -28,7 +27,7 @@ const TrainingState = (props) => {
       const res = await axios.get("/api/trainings/");
       dispatch({ type: GET_TRAININGS, payload: res.data });
     } catch (err) {
-      dispatch({ type: TRAINING_ERROR, payload: err.response.msg });
+      dispatch({ type: TRAINING_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -39,7 +38,7 @@ const TrainingState = (props) => {
       const res = await axios.post("/api/trainings", training, config);
       dispatch({ type: ADD_TRAINING, payload: res.data });
     } catch (err) {
-      dispatch({ type: TRAINING_ERROR, payload: err.response.msg });
+      dispatch({ type: TRAINING_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -49,7 +48,7 @@ const TrainingState = (props) => {
       await axios.delete(`/api/trainings/${id}`);
       dispatch({ type: DELETE_TRAINING, payload: id });
     } catch (err) {
-      dispatch({ type: TRAINING_ERROR, payload: err.response.msg });
+      dispatch({ type: TRAINING_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -65,7 +64,7 @@ const TrainingState = (props) => {
       );
       dispatch({ type: UPDATE_TRAINING, payload: res.data });
     } catch (err) {
-      dispatch({ type: TRAINING_ERROR, payload: err.response.msg });
+      dispatch({ type: TRAINING_ERROR, payload: err.response.data.msg });
     }
   };
 

@@ -17,28 +17,40 @@ const TrainingDetails = ({ match }) => {
     // eslint-disable-next-line
   }, []);
 
-  // Check to see if training exists
-  // eslint-disable-next-line
-
   if (trainings === null) {
     return <h5 className="mt-5">No details</h5>;
   }
 
-  const current_training = trainings.filter((training) => {
-    // eslint-disable-next-line
+  let current_training = trainings.filter((training) => {
     if (training._id == training_id) {
       return true;
     }
-  })[0];
+  });
+
+  if (current_training.length < 1) {
+    return <h5 className="mt-5">No details</h5>;
+  } else {
+    current_training = current_training[0];
+  }
 
   const { name, category, description, max_people } = current_training;
   const { user } = authContext;
   const user_id = user._id;
 
+  let already_reserved = 0;
+  let progress = "0%";
+  bookingContext.bookings.forEach((booking) => {
+    if (booking.training_id === training_id) {
+      already_reserved = booking.book.length;
+      progress = parseFloat((already_reserved / max_people) * 100);
+      progress = `${progress}%`;
+    }
+  });
+
   return (
     <Fragment>
-      <div className="d-flex mt-3">
-        <div>
+      <div className="d-flex mt-3 flex-wrap">
+        <div className="w-100">
           <div className="d-flex align-items-center">
             <div>
               <h1 className="mb-0">{name}</h1>
@@ -50,16 +62,23 @@ const TrainingDetails = ({ match }) => {
           <div>
             <p className="font-weight-bold p-2">Max people: {max_people}</p>
           </div>
+          <div className="mr-3">
+            <div className="progress">
+              <div
+                className="progress-bar progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                style={{ width: progress }}
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
           <div className="my-1 p-2">
-            <p>
-              {description}
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae at
-              ex quos ratione recusandae optio cumque maxime numquam quis et.
-            </p>
+            <p>{description}</p>
           </div>
         </div>
-        <div className="bookings w-50">
-          <p>Reservations for this training</p>
+        <div className="bookings w-100">
           <button
             className="btn btn-outline-primary mb-3"
             onClick={() => {
