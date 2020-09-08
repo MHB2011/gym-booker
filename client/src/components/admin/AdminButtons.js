@@ -21,10 +21,10 @@ const AdminButtons = ({ training }) => {
           className="mt-2 mr-2"
           onClick={() => setCurrent(training)}
         >
-          <i className="far fa-edit"></i>
+          <i className="far fa-edit p-2"></i>
         </Link>
         <a href="/" className="mt-2 mr-2" onClick={onDelete} id={_id}>
-          <i id={_id} className="far fa-trash-alt"></i>
+          <i id={_id} className="far fa-trash-alt p-2"></i>
         </a>
       </div>
     </div>

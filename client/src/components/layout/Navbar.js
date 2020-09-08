@@ -1,11 +1,18 @@
 import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 
 const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const { logout, user, isAuthenticated } = authContext;
+  let history = useHistory();
+  const location = useLocation();
+  let renderBack;
+
+  location.pathname == "/login" || location.pathname == "/register"
+    ? (renderBack = false)
+    : (renderBack = true);
 
   const onLogout = () => {
     logout();
@@ -40,10 +47,10 @@ const Navbar = ({ title, icon }) => {
         </a>
       </li>
       {user && user.admin == 1 ? adminLinks : ""}
-      <li>
-        <p className="hello btn btn-sm btn-outline-secondary mx-3">
-          Hello, {user && user.name}
-        </p>
+      <li className="d-none d-md-flex">
+        <a className="nav-link">
+          <span> Hello,{user && user.name}</span>
+        </a>
       </li>
     </Fragment>
   );
@@ -66,7 +73,11 @@ const Navbar = ({ title, icon }) => {
   return (
     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
       <div className="container">
-        <Link to="/" className="navbar-brand">
+        {renderBack ? (
+          <i className="fas fa-arrow-left" onClick={() => history.goBack()} />
+        ) : null}
+
+        <Link to="/" className="navbar-brand ml-3">
           <i className={icon} /> GymBooker
         </Link>
         <button

@@ -60,9 +60,13 @@ img {
 }
 
 .hello {
-  color: #fff !important;
+  color: rgba(255, 255, 255, 0.5) !important;
   text-decoration: none !important;
   cursor: default !important;
+  border: none !important;
+  font-family: "Roboto", sans-serif !important;
+  font-size: 1rem;
+  margin-bottom: 0;
 }
 
 .hello:hover {
@@ -83,7 +87,7 @@ img {
 }
 
 [class^="item-admin-header-"] {
-  background: #eeeeee;
+  background: transparent;
   border-radius: 15px;
   color: #343a41 !important;
   transition: opacity 0.5s;
@@ -106,4 +110,47 @@ img {
 
 .admin-buttons i {
   color: #333;
+}
+
+#root {
+  background: #ecf0f1;
+  min-height: 100vh;
+}
+
+.link-training {
+  color: #333 !important;
+}
+
+.link-training:hover {
+  text-decoration: none !important;
+  opacity: 0.6;
+}
+
+.link-training .progress {
+  height: 0.3rem;
+}
+
+.navbar .fa-dumbbell,
+.navbar .fa-arrow-left {
+  color: #fff;
+}
+
+.add-training {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-training i {
+  color: #fff;
+}
+
+.btn-circle {
+  width: 48px;
+  height: 48px;
+  padding: 6px 0px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
 }

@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <h2 className="my-3">Next trainings</h2>
+      <h5 className="my-3 text-muted">Next trainings</h5>
       <div className="d-flex flex-column mt-3">
         <Trainings />
       </div>
