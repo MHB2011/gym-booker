@@ -103,3 +103,7 @@ img {
   color: #ec0101;
   cursor: pointer;
 }
+
+.admin-buttons i {
+  color: #333;
+}

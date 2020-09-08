@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import AdminButtons from "../admin/AdminButtons";
 import AuthContext from "../../context/auth/authContext";
 import TrainingContext from "../../context/training/TrainingContext";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 const TrainingItem = ({ training }) => {
   const authContext = useContext(AuthContext);
   const trainingContext = useContext(TrainingContext);
-  const { removeTraining, setCurrent, clearCurrent } = trainingContext;
 
   const { isAdmin } = authContext;
   const { _id, name, description, max_people } = training;
@@ -22,34 +22,6 @@ const TrainingItem = ({ training }) => {
   let category = training.category;
 
   category = category.charAt(0).toUpperCase() + category.slice(1);
-
-  const onDelete = (e) => {
-    e.preventDefault();
-    clearCurrent();
-    removeTraining(e.target.id);
-  };
-
-  const AdminButtons = () => {
-    return (
-      <div className="admin-buttons d-inline-block ml-2">
-        <Link
-          to="/admin/trainings/edit_training"
-          className="btn btn-sm btn-outline-secondary mt-2 mr-2"
-          onClick={() => setCurrent(training)}
-        >
-          Edit
-        </Link>
-        <a
-          href="/"
-          className="btn btn-sm btn-outline-danger mt-2 mr-2"
-          onClick={onDelete}
-          id={_id}
-        >
-          Remove
-        </a>
-      </div>
-    );
-  };
 
   return (
     <div className="mb-3 p-2 card">
@@ -75,7 +47,7 @@ const TrainingItem = ({ training }) => {
               >
                 View
               </Link>
-              {isAdmin ? <AdminButtons /> : null}
+              {isAdmin ? <AdminButtons training={training} /> : null}
             </div>
           </div>
         </div>

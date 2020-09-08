@@ -64,7 +64,7 @@ const Navbar = ({ title, icon }) => {
   );
 
   return (
-    <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav className="navbar navbar-expand-md bg-dark navbar-dark">
       <div className="container">
         <Link to="/" className="navbar-brand">
           <i className={icon} /> GymBooker
