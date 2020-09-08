@@ -54,7 +54,6 @@ const TrainingItem = ({ training }) => {
 
           <div className="d-flex align-items-end">
             <h4 className="font-weight-bold mb-0 mr-2">{name}</h4>
-            {isAdmin ? <AdminButtons training={training} /> : null}
           </div>
 
           <div className="progress w-100">

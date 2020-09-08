@@ -25,13 +25,13 @@ const AdminTrainings = () => {
   return (
     <Router>
       <div>
-        <div className="mb-2 d-flex d-sm-block justify-content-end">
+        <div className="mb-2 d-block justify-content-end">
           <Link
             to={`${match.url}/add_training`}
             className="btn btn-success btn-circle add-training"
             onClick={onAddTrainingClick}
           >
-            <i class="fas fa-plus"></i>
+            <i className="fas fa-plus"></i>
           </Link>
         </div>
         <main>

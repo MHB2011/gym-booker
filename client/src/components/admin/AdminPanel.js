@@ -28,7 +28,7 @@ const AdminPanel = () => {
                 <i className="fas fa-users fa-3x mr-2"></i> <h5>Users</h5>
               </Link>
             </div>
-            <div className="col">
+            <div className="col p-0">
               <Link
                 to={`${match.url}/trainings`}
                 className="item-admin-header-trainings p-2 d-flex align-items-center"
